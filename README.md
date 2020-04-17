@@ -19,7 +19,7 @@ $ npm install -g grandeurcloud
 $ grandeurcloud COMMAND
 running command...
 $ grandeurcloud (-v|--version|version)
-grandeurcloud/0.0.1 darwin-x64 node-v12.13.1
+grandeurcloud/0.0.2 darwin-x64 node-v12.13.1
 $ grandeurcloud --help [COMMAND]
 USAGE
   $ grandeurcloud COMMAND
@@ -64,5 +64,5 @@ DESCRIPTION
   This command will run a local development server in the workspace with auto reload functionality.
 ```
 
-_See code: [src/commands/serve.js](https://github.com/grandeurtech/grandeurcloud-cli/blob/v0.0.1/src/commands/serve.js)_
+_See code: [src/commands/serve.js](https://github.com/grandeurtech/grandeurcloud-cli/blob/v0.0.2/src/commands/serve.js)_
 <!-- commandsstop -->
