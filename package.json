@@ -1,7 +1,7 @@
 {
   "name": "grandeurcloud",
   "description": "This command line interface has been designed to let users work with Grandeur Cloud over command prompt",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Grandeur Technologies <hi@grandeur.tech>",
   "bin": {
     "grandeurcloud": "./bin/run"
