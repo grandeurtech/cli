@@ -1,10 +1,10 @@
 {
-  "name": "gApollo",
+  "name": "grandeurcloud",
   "description": "This command line interface has been designed to let users work with Grandeur Cloud over command prompt",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "author": "Grandeur Technologies <hi@grandeur.tech>",
   "bin": {
-    "gApollo": "./bin/run"
+    "grandeurcloud": "./bin/run"
   },
   "bugs": "https://github.com/grandeurtech/grandeurcloud-cli/issues",
   "dependencies": {
@@ -35,12 +35,12 @@
   "main": "src/index.js",
   "oclif": {
     "commands": "./src/commands",
-    "bin": "gApollo",
+    "bin": "grandeurcloud",
     "plugins": [
       "@oclif/plugin-help"
     ]
   },
-  "repository": "https://github.com/grandeurtech/grandeurcloud-cli",
+  "repository": "grandeurtech/grandeurcloud-cli",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint .",
