@@ -28,8 +28,27 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`grandeurcloud deploy`](#grandeurcloud-deploy)
 * [`grandeurcloud help [COMMAND]`](#grandeurcloud-help-command)
 * [`grandeurcloud serve`](#grandeurcloud-serve)
+
+## `grandeurcloud deploy`
+
+Describe the command here
+
+```
+USAGE
+  $ grandeurcloud deploy
+
+OPTIONS
+  -n, --name=name  name to print
+
+DESCRIPTION
+  ...
+  Extra documentation goes here
+```
+
+_See code: [src/commands/deploy.js](https://github.com/grandeurtech/grandeurcloud-cli/blob/v0.0.3/src/commands/deploy.js)_
 
 ## `grandeurcloud help [COMMAND]`
 
