@@ -87,10 +87,13 @@ class InitCommand extends Command {
       // We will open cloud dashboard
       // with a return data object so that the dashboard
       // could send back a response to the cli
-      var reference = `http://localhost:${port}/setup`
+      var reference = {
+        url: `http://localhost:${port}/setup`,
+        at: Date.now()
+      }
 
       // Encode the reference
-      var encoded = Buffer.from(reference, "utf8").toString("base64").replace(/=/g, "");
+      var encoded = Buffer.from( JSON.stringify(reference), "utf8").toString("base64").replace(/=/g, "");
 
       // Log a response
       this.log(`Let us first associate this directory with a project\n`)
