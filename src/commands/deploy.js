@@ -88,7 +88,7 @@ class DeployCommand extends Command {
       cli.action.start("Uploading")
 
       // Submit request
-      var res = await fetch(`https://api.grandeur.tech/hosting/upload?apiKey=${config.projectApiKey}`, { method: 'POST', body: form })
+      var res = await fetch(`https://api.grandeur.tech/hosting/upload?apiKey=${config.apiKey}`, { method: 'POST', body: form })
 
       // Convert response to JSON
       var res = await res.json()
