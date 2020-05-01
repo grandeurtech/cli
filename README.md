@@ -30,22 +30,20 @@ USAGE
 <!-- commands -->
 * [`grandeurcloud deploy`](#grandeurcloud-deploy)
 * [`grandeurcloud help [COMMAND]`](#grandeurcloud-help-command)
+* [`grandeurcloud init`](#grandeurcloud-init)
 * [`grandeurcloud serve`](#grandeurcloud-serve)
 
 ## `grandeurcloud deploy`
 
-Describe the command here
+deploy site to grandeur cloud
 
 ```
 USAGE
   $ grandeurcloud deploy
 
-OPTIONS
-  -n, --name=name  name to print
-
 DESCRIPTION
   ...
-  Extra documentation goes here
+  This command will deploy the site from local folder to grandeur cloud
 ```
 
 _See code: [src/commands/deploy.js](https://github.com/grandeurtech/grandeurcloud-cli/blob/v0.0.3/src/commands/deploy.js)_
@@ -67,9 +65,25 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3/src/commands/help.ts)_
 
+## `grandeurcloud init`
+
+init a directory as grandeur cloud project workspace
+
+```
+USAGE
+  $ grandeurcloud init
+
+DESCRIPTION
+  ...
+  This command configures a directory as grandeur cloud project workspace from where you can interact with your project 
+  with CLI.
+```
+
+_See code: [src/commands/init.js](https://github.com/grandeurtech/grandeurcloud-cli/blob/v0.0.3/src/commands/init.js)_
+
 ## `grandeurcloud serve`
 
-Run a local development server
+run a local development server
 
 ```
 USAGE

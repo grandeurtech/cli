@@ -8,7 +8,8 @@ const {cli} = require('cli-ux')
 const chalk = require('chalk')
 const express = require('express')
 const WebSocket = require('ws')
-const fs = require('fs')
+const fs = require('fs').promises
+const fsWithoutPromises = require('fs')
 
 // Command Class
 class ServeCommand extends Command {
@@ -32,13 +33,16 @@ class ServeCommand extends Command {
     // For html pages
     // we will attach a script which will listen to
     // file change event from server
-    app.get([/\/$/, /.*\.html$/], function (req, res) {
+    app.get([/\/$/, /.*\.html$/], async function (req, res) {
       // Get the filename
       var filename = process.cwd() + req.path;
       filename += filename.endsWith('/')? 'index.html': '';
 
-      // Read the file
-      fs.readFile(filename, function (_, data) {
+      // Use try catch
+      try {
+        // Read the file
+        var data = await fs.readFile(filename);
+ 
         // Send modified buffer to server
         res.send(`
           ${data}
@@ -73,7 +77,9 @@ class ServeCommand extends Command {
             }
           </script>
         `);
-      });
+      } catch (error) {
+        throw error
+      }
     });
 
     // Serve static files from the path
@@ -82,6 +88,9 @@ class ServeCommand extends Command {
 
     // Use try catch
     try {
+      // Check if configuration file exists
+      await fs.readFile(process.cwd() + "/gc.config.json")
+
       // and start the http server
       await http.listen(port)
 
@@ -89,7 +98,7 @@ class ServeCommand extends Command {
       const ws = new WebSocket.Server({server: http})
 
       // add watcher on the directory
-      fs.watch(process.cwd(), { recursive:true }, () => {
+      fsWithoutPromises.watch(process.cwd(), { recursive:true }, () => {
         // broadcast the event
         for (var client of ws.clients) {
           // send message to the client
@@ -110,7 +119,19 @@ class ServeCommand extends Command {
       cli.open(`http://localhost:${port}`)
 
     } catch (error) {
-      // error
+      // Handle errors
+      if (error.code === "ENOENT") {
+        // Configuration file not found
+        cli.action.stop("Failed")
+
+        // Log error
+        this.log("This directory is not associate with a project.")
+
+        // Exit
+        return
+      }
+
+      // other erros
       throw error
     }
   }
@@ -118,7 +139,7 @@ class ServeCommand extends Command {
 
 // Documentation
 // Serve Command Description
-ServeCommand.description = `Run a local development server
+ServeCommand.description = `run a local development server
 ...
 This command will run a local development server in the workspace with auto reload functionality.
 `

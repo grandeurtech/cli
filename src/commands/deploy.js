@@ -6,10 +6,8 @@
 const {Command, flags} = require('@oclif/command')
 const {cli} = require('cli-ux')
 const chalk = require('chalk')
-
 const fs = require('fs').promises
 const fsWithoutPromises = require('fs')
-
 const FormData = require("form-data")
 const fetch = require("node-fetch")
 
@@ -157,7 +155,19 @@ class DeployCommand extends Command {
           break          
       }
     } catch (error) {
-      // error
+      // Handle errors
+      if (error.code === "ENOENT") {
+        // Configuration file not found
+        cli.action.stop("Failed")
+
+        // Log error
+        this.log("This directory is not associate with a project.")
+
+        // Exit
+        return
+      }
+
+      // other erros
       throw error
     }
   }
@@ -165,9 +175,9 @@ class DeployCommand extends Command {
 
 // Documentation
 // Deploy Command Description
-DeployCommand.description = `Deploy site to Grandeur Cloud
+DeployCommand.description = `deploy site to grandeur cloud
 ...
-This command will deploy the site from local folder to Grandeur Cloud
+This command will deploy the site from local folder to grandeur cloud
 `
 // Arguments
 DeployCommand.flags = {}
