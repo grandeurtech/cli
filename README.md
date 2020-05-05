@@ -19,7 +19,7 @@ $ npm install -g grandeurcloud
 $ grandeurcloud COMMAND
 running command...
 $ grandeurcloud (-v|--version|version)
-grandeurcloud/0.0.3 darwin-x64 node-v12.13.1
+grandeurcloud/0.0.6 darwin-x64 node-v12.13.1
 $ grandeurcloud --help [COMMAND]
 USAGE
   $ grandeurcloud COMMAND
@@ -28,8 +28,25 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`grandeurcloud deploy`](#grandeurcloud-deploy)
 * [`grandeurcloud help [COMMAND]`](#grandeurcloud-help-command)
+* [`grandeurcloud init`](#grandeurcloud-init)
 * [`grandeurcloud serve`](#grandeurcloud-serve)
+
+## `grandeurcloud deploy`
+
+deploy site to grandeur cloud
+
+```
+USAGE
+  $ grandeurcloud deploy
+
+DESCRIPTION
+  ...
+  This command will deploy the site from local folder to grandeur cloud
+```
+
+_See code: [src/commands/deploy.js](https://github.com/grandeurtech/grandeurcloud-cli/blob/v0.0.6/src/commands/deploy.js)_
 
 ## `grandeurcloud help [COMMAND]`
 
@@ -48,9 +65,25 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3/src/commands/help.ts)_
 
+## `grandeurcloud init`
+
+init a directory as grandeur cloud project workspace
+
+```
+USAGE
+  $ grandeurcloud init
+
+DESCRIPTION
+  ...
+  This command initialize a directory as grandeur cloud project workspace from where you can interact with your project 
+  with CLI.
+```
+
+_See code: [src/commands/init.js](https://github.com/grandeurtech/grandeurcloud-cli/blob/v0.0.6/src/commands/init.js)_
+
 ## `grandeurcloud serve`
 
-Run a local development server
+run a local development server
 
 ```
 USAGE
@@ -64,5 +97,5 @@ DESCRIPTION
   This command will run a local development server in the workspace with auto reload functionality.
 ```
 
-_See code: [src/commands/serve.js](https://github.com/grandeurtech/grandeurcloud-cli/blob/v0.0.3/src/commands/serve.js)_
+_See code: [src/commands/serve.js](https://github.com/grandeurtech/grandeurcloud-cli/blob/v0.0.6/src/commands/serve.js)_
 <!-- commandsstop -->

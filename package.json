@@ -1,7 +1,7 @@
 {
   "name": "grandeurcloud",
   "description": "This command line interface has been designed to let users work with Grandeur Cloud over command prompt",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "author": "Grandeur Technologies <hi@grandeur.tech>",
   "bin": {
     "grandeurcloud": "./bin/run"
@@ -13,7 +13,11 @@
     "@oclif/plugin-help": "^2.2.3",
     "chalk": "^4.0.0",
     "cli-ux": "^5.4.5",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "figlet": "^1.4.0",
+    "form-data": "^3.0.0",
+    "node-fetch": "^2.6.0",
     "ws": "^7.2.3"
   },
   "devDependencies": {
