@@ -8,8 +8,7 @@ const {cli} = require('cli-ux')
 const chalk = require('chalk')
 const fs = require('fs').promises
 const fsWithoutPromises = require('fs')
-const FormData = require("form-data")
-const fetch = require("node-fetch")
+const post = require('../apollo/handlers/post.handler')
 
 // Command Class
 class DeployCommand extends Command {
@@ -66,18 +65,14 @@ class DeployCommand extends Command {
       // Create map
       const files = await mapDirectory(`${process.cwd()}/${config.root}`, "")
 
-      // Create a form
-      var form = new FormData();
+      // Create an array to hold buffers
+      var attachments = [];
 
       // Iterate over map
       for (var file of files) {
         // and append file and filename to the form
-        form.append("attachment", fsWithoutPromises.createReadStream(`${process.cwd()}/${config.root + file}`))
-        form.append("filenames", file)
+        attachments.push(fsWithoutPromises.createReadStream(`${process.cwd()}/${config.root + file}`))
       }
-
-      // Append token
-      form.append("token", config.accessToken)
 
       // Log the map
       this.log(`Creating directory map from ${chalk.bold(config.root)}\n`)
@@ -87,11 +82,17 @@ class DeployCommand extends Command {
       // Start upload
       cli.action.start("Uploading")
 
+      // Configurations
+      var postConfig = {
+        url: "https://api.grandeur.tech",
+        apiKey: config.apiKey,
+        accessKey: config.accessKey,
+        accessToken: config.accessToken
+      }
+      
       // Submit request
-      var res = await fetch(`https://api.grandeur.tech/hosting/upload?apiKey=${config.apiKey}`, { method: 'POST', body: form })
-
-      // Convert response to JSON
-      var res = await res.json()
+      var postHandler = new post(postConfig)
+      var res = await postHandler.send("/hosting/upload", {filenames: files}, attachments)
 
       // Log response
       this.log("Uploading")
@@ -99,24 +100,11 @@ class DeployCommand extends Command {
       // and handle response and stop spinner
       switch(res.code) {
         case "TOKEN-INVALID": 
-          // Invalid token
-          cli.action.start("Access token is invalid")
-
-          // Stop spinnner
-          cli.action.stop("Failed")
-          break;
-
         case "TOKEN-VALIDATION-FAILED":
-          // Revoked token
-          cli.action.start("Token has been revoked or is invalid")
-
-          // Stop spinner
-          cli.action.stop("Failed")
-          break
-
-        case "AUTH-UNAUTHORIZED":
+        case "SIGNATURE-INVALID":
+        case "PERMISSION-DENIED":
           // Invalid token
-          cli.action.start("Access token is invalid")
+          cli.action.start("Access token is invalid. Please run grandeurcloud init command again.")
 
           // Stop spinner
           cli.action.stop("Failed")

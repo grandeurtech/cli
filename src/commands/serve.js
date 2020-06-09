@@ -30,10 +30,19 @@ class ServeCommand extends Command {
     // Create a server object
     const http = require('http').Server(app)
 
+    // For logging
+    app.use((req, res, next) => {
+      // Log url and method
+      this.log(`${chalk.yellow(`[ ${req.method} ]`)} ${req.url}`);
+
+      // next
+      next();
+    })
+
     // For html pages
     // we will attach a script which will listen to
     // file change event from server
-    app.get([/\/$/, /.*\.html$/], async function (req, res) {
+    app.get([/\/$/, /.*\.html$/], async (req, res) => {
       // Get the filename
       var filename = process.cwd() + req.path;
       filename += filename.endsWith('/')? 'index.html': '';
@@ -77,7 +86,17 @@ class ServeCommand extends Command {
             }
           </script>
         `);
+
       } catch (error) {
+        if (error.code === "ENOENT") {
+          // Log error
+          this.log(`${chalk.red("[ 404 ]")} ${req.url}`);
+
+          // File not Found
+          // return 404 error
+          return res.status(404).json({code: "NOT-FOUND", message: "Requested file not found on the directory."})
+        }
+
         throw error
       }
     });

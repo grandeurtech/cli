@@ -33,7 +33,7 @@ class InitCommand extends Command {
     // Route to get response from dashboard
     app.get('/setup', cors(), async (req, res) => {
       // Got the response
-      if (!req.query.apiKey || !req.query.accessToken) {
+      if (!req.query.apiKey || !req.query.accessToken || !req.query.accessKey) {
         // Parameters aren't provided
         res.status(422).json({
           code: "DATA-INVALID",
@@ -53,6 +53,7 @@ class InitCommand extends Command {
       // to save the configurations
       var config = {
         apiKey: req.query.apiKey,
+        accessKey: req.query.accessKey,
         accessToken: req.query.accessToken,
         root: "/"
       }
