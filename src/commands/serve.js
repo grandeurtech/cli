@@ -24,91 +24,92 @@ class ServeCommand extends Command {
     // Show spinner
     cli.action.start("Starting development server")
 
-    // Create an express object
-    const app = express()
-
-    // Create a server object
-    const http = require('http').Server(app)
-
-    // For logging
-    app.use((req, res, next) => {
-      // Log url and method
-      this.log(`${chalk.yellow(`[ ${req.method} ]`)} ${req.url}`);
-
-      // next
-      next();
-    })
-
-    // For html pages
-    // we will attach a script which will listen to
-    // file change event from server
-    app.get([/\/$/, /.*\.html$/], async (req, res) => {
-      // Get the filename
-      var filename = process.cwd() + req.path;
-      filename += filename.endsWith('/')? 'index.html': '';
-
-      // Use try catch
-      try {
-        // Read the file
-        var data = await fs.readFile(filename);
- 
-        // Send modified buffer to server
-        res.send(`
-          ${data}
-
-          <script>
-            // This script will listen to file change event
-            // from server and will automatically reload the page
-            
-            // Setup a new connection
-            var ws = new WebSocket("ws://localhost:${port}");
-
-            // On connection
-            ws.onopen = function() {
-              // Connected
-              console.log("Connected to Grandeur Cloud development server.");
-            }
-
-            // On message
-            ws.onmessage = function(event) {
-              // Received event
-              console.log(event);
-              if (event.data == 'file-change-event') {
-                console.log("Received triger. Reloading...");
-                window.location.reload(true);
-              }
-            }
-
-            // On close
-            ws.onclose = function() {
-              // Disconnected
-              console.log("Disconnected from Grandeur Cloud development server.")
-            }
-          </script>
-        `);
-
-      } catch (error) {
-        if (error.code === "ENOENT") {
-          // Log error
-          this.log(`${chalk.red("[ 404 ]")} ${req.url}`);
-
-          // File not Found
-          // return 404 error
-          return res.status(404).json({code: "NOT-FOUND", message: "Requested file not found on the directory."})
-        }
-
-        throw error
-      }
-    });
-
-    // Serve static files from the path
-    // on which the commmand was executed
-    app.use(express.static(process.cwd()));
 
     // Use try catch
     try {
       // Check if configuration file exists
-      await fs.readFile(process.cwd() + "/gc.config.json")
+      var config = JSON.parse(await fs.readFile(process.cwd() + "/gc.config.json"))
+
+      // Create an express object
+      const app = express()
+
+      // Create a server object
+      const http = require('http').Server(app)
+
+      // For logging
+      app.use((req, res, next) => {
+        // Log url and method
+        this.log(`${chalk.yellow(`[ ${req.method} ]`)} ${req.url}`);
+
+        // next
+        next();
+      })
+
+      // For html pages
+      // we will attach a script which will listen to
+      // file change event from server
+      app.get([/\/$/, /.*\.html$/], async (req, res) => {
+        // Get the filename
+        var filename = `${process.cwd()}/${config.root}${req.path}`;
+        filename += filename.endsWith('/')? 'index.html': '';
+
+        // Use try catch
+        try {
+          // Read the file
+          var data = await fs.readFile(filename);
+  
+          // Send modified buffer to server
+          res.send(`
+            ${data}
+
+            <script>
+              // This script will listen to file change event
+              // from server and will automatically reload the page
+              
+              // Setup a new connection
+              var ws = new WebSocket("ws://localhost:${port}");
+
+              // On connection
+              ws.onopen = function() {
+                // Connected
+                console.log("Connected to Grandeur Cloud development server.");
+              }
+
+              // On message
+              ws.onmessage = function(event) {
+                // Received event
+                console.log(event);
+                if (event.data == 'file-change-event') {
+                  console.log("Received triger. Reloading...");
+                  window.location.reload(true);
+                }
+              }
+
+              // On close
+              ws.onclose = function() {
+                // Disconnected
+                console.log("Disconnected from Grandeur Cloud development server.")
+              }
+            </script>
+          `);
+
+        } catch (error) {
+          if (error.code === "ENOENT") {
+            // Log error
+            this.log(`${chalk.red("[ 404 ]")} ${req.url}`);
+
+            // File not Found
+            // return 404 error
+            return res.status(404).json({code: "NOT-FOUND", message: "Requested file not found on the directory."})
+          }
+
+          throw error
+        }
+      });
+
+      // Serve static files from the path
+      // on which the commmand was executed
+      app.use(express.static(`${process.cwd()}/${config.root}`));
 
       // and start the http server
       await http.listen(port)
@@ -117,7 +118,7 @@ class ServeCommand extends Command {
       const ws = new WebSocket.Server({server: http})
 
       // add watcher on the directory
-      fsWithoutPromises.watch(process.cwd(), { recursive:true }, () => {
+      fsWithoutPromises.watch(`${process.cwd()}/${config.root}`, { recursive:true }, () => {
         // broadcast the event
         for (var client of ws.clients) {
           // send message to the client
