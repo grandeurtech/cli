@@ -1,6 +1,6 @@
 // Deploy Command
 // Running this command will deploy the site
-// to Grandeur Cloud Web Hosting
+// to Grandeur Web Hosting
 
 // Import Libraries
 const {Command, flags} = require('@oclif/command')
@@ -19,7 +19,7 @@ class DeployCommand extends Command {
 
     try {
       // Open the configuration file from local directory
-      const config = JSON.parse(await fs.readFile(process.cwd() + "/gc.config.json"))
+      const config = JSON.parse(await fs.readFile(process.cwd() + "/grandeur.config.json"))
 
       // Function to generate directory files map
       const mapDirectory = async (basePath, path) => {
@@ -33,7 +33,7 @@ class DeployCommand extends Command {
         // and prepare a map
         for (var node of nodes) {
           // Exlude the config file to prevent security breach
-          if (node == "gc.config.json") continue
+          if (node == "grandeur.config.json") continue
 
           // We will checkout if the object is a directory
           // or a file
@@ -104,7 +104,7 @@ class DeployCommand extends Command {
         case "SIGNATURE-INVALID":
         case "PERMISSION-DENIED":
           // Invalid token
-          cli.action.start("Access token is invalid. Please run grandeurcloud init command again.")
+          cli.action.start("Access token is invalid. Please run grandeur init command again.")
 
           // Stop spinner
           cli.action.stop("Failed")
@@ -163,9 +163,9 @@ class DeployCommand extends Command {
 
 // Documentation
 // Deploy Command Description
-DeployCommand.description = `deploy site to grandeur cloud
+DeployCommand.description = `deploy site to grandeur
 ...
-This command will deploy the site from local folder to grandeur cloud
+This command will deploy the site from local folder to grandeur
 `
 // Arguments
 DeployCommand.flags = {}

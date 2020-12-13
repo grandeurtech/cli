@@ -28,7 +28,7 @@ class ServeCommand extends Command {
     // Use try catch
     try {
       // Check if configuration file exists
-      var config = JSON.parse(await fs.readFile(process.cwd() + "/gc.config.json"))
+      var config = JSON.parse(await fs.readFile(process.cwd() + "/grandeur.config.json"))
 
       // Create an express object
       const app = express()
@@ -72,7 +72,7 @@ class ServeCommand extends Command {
               // On connection
               ws.onopen = function() {
                 // Connected
-                console.log("Connected to Grandeur Cloud development server.");
+                console.log("Connected to Grandeur development server.");
               }
 
               // On message
@@ -88,7 +88,7 @@ class ServeCommand extends Command {
               // On close
               ws.onclose = function() {
                 // Disconnected
-                console.log("Disconnected from Grandeur Cloud development server.")
+                console.log("Disconnected from Grandeur development server.")
               }
             </script>
           `);
@@ -133,7 +133,7 @@ class ServeCommand extends Command {
       cli.action.stop()
 
       // Log a response
-      this.log(`Grandeur Cloud development server has been started on ${chalk.bold(port)} \n`)
+      this.log(`Grandeur development server has been started on ${chalk.bold(port)} \n`)
 
       // Open the url in browser
       cli.open(`http://localhost:${port}`)

@@ -1,6 +1,6 @@
 // Init Command
 // Running this command will init a directory
-// as a Grandeur Cloud project workspace
+// as a Grandeur project workspace
 
 // Import Libraries
 const {Command, flags} = require('@oclif/command')
@@ -21,8 +21,8 @@ class InitCommand extends Command {
     // Show spinner
     cli.action.start("Starting")
                                                                  
-    // Show Grandeur Cloud logo
-    this.log(figlet.textSync("Grandeur Cloud", {font: "Slant"}))
+    // Show Grandeur logo
+    this.log(figlet.textSync("Grandeur", {font: "Slant"}))
 
     // Create an express object
     const app = express()
@@ -61,7 +61,7 @@ class InitCommand extends Command {
       // Use try catch
       try {
         // Save file to directory
-        await fs.writeFile(`${process.cwd()}/gc.config.json`, JSON.stringify(config, null, "\t"))
+        await fs.writeFile(`${process.cwd()}/grandeur.config.json`, JSON.stringify(config, null, "\t"))
 
         // Return success
         res.status(200).json({
@@ -117,9 +117,9 @@ class InitCommand extends Command {
 
 // Documentation
 // Init Command Description
-InitCommand.description = `init a directory as grandeur cloud project workspace
+InitCommand.description = `init a directory as grandeur project workspace
 ...
-This command initialize a directory as grandeur cloud project workspace from where you can interact with your project with CLI.
+This command initialize a directory as grandeur project workspace from where you can interact with your project with CLI.
 `
 
 InitCommand.flags = {}

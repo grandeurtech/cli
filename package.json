@@ -1,12 +1,12 @@
 {
-  "name": "grandeurcloud",
-  "description": "This command line interface has been designed to let users work with Grandeur Cloud over command prompt",
-  "version": "0.1.1",
+  "name": "grandeur-cli",
+  "description": "This command line interface has been designed to let users work with Grandeur over command prompt",
+  "version": "1.0.0",
   "author": "Grandeur Technologies <hi@grandeur.tech>",
   "bin": {
-    "grandeurcloud": "./bin/run"
+    "grandeur": "./bin/run"
   },
-  "bugs": "https://github.com/grandeurtech/grandeurcloud-cli/issues",
+  "bugs": "https://github.com/grandeurtech/cli/issues",
   "dependencies": {
     "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.15.1",
@@ -44,12 +44,12 @@
   "main": "src/index.js",
   "oclif": {
     "commands": "./src/commands",
-    "bin": "grandeurcloud",
+    "bin": "grandeur",
     "plugins": [
       "@oclif/plugin-help"
     ]
   },
-  "repository": "grandeurtech/grandeurcloud-cli",
+  "repository": "grandeurtech/cli",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint .",
