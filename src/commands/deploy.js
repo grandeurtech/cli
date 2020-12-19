@@ -21,6 +21,9 @@ class DeployCommand extends Command {
       // Open the configuration file from local directory
       const config = JSON.parse(await fs.readFile(process.cwd() + "/grandeur.config.json"))
 
+      // Setup includes
+      if (!config.ignore) config.ignore = [];
+
       // Function to generate directory files map
       const mapDirectory = async (basePath, path) => {
         // Array to store files
@@ -33,7 +36,7 @@ class DeployCommand extends Command {
         // and prepare a map
         for (var node of nodes) {
           // Exlude the config file to prevent security breach
-          if (node == "grandeur.config.json") continue
+          if (node == "grandeur.config.json" || config.ignore.includes(node)) continue
 
           // We will checkout if the object is a directory
           // or a file
