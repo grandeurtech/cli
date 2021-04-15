@@ -100,10 +100,10 @@ class InitCommand extends Command {
       this.log(`Let us first associate this directory with a project\n`)
 
       // Open the url in browser
-      cli.open(`https://cloud.grandeur.tech/cli/init/${encoded}`)
+      cli.open(`https://cloud.grandeur.tech/cli/init/?reference=${encoded}`)
 
       // Log the url
-      this.log(`Opening dashboard. If a page do not automatically show up in the browser then please visit ${chalk.bold(`https://cloud.grandeur.tech/cli/init/${encoded}`)}\n`)
+      this.log(`Opening dashboard. If a page do not automatically show up in the browser then please visit ${chalk.bold(`https://cloud.grandeur.tech/cli/init/?reference=${encoded}`)}\n`)
 
       // Show spinner
       cli.action.start("Waiting")
