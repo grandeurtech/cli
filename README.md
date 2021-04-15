@@ -19,7 +19,7 @@ $ npm install -g grandeur-cli
 $ grandeur COMMAND
 running command...
 $ grandeur (-v|--version|version)
-grandeur-cli/1.0.1 darwin-x64 node-v12.13.1
+grandeur-cli/1.0.2 darwin-x64 node-v12.13.1
 $ grandeur --help [COMMAND]
 USAGE
   $ grandeur COMMAND
@@ -46,7 +46,7 @@ DESCRIPTION
   This command will deploy the site from local folder to grandeur
 ```
 
-_See code: [src/commands/deploy.js](https://github.com/grandeurtech/cli/blob/v1.0.1/src/commands/deploy.js)_
+_See code: [src/commands/deploy.js](https://github.com/grandeurtech/cli/blob/v1.0.2/src/commands/deploy.js)_
 
 ## `grandeur help [COMMAND]`
 
@@ -79,7 +79,7 @@ DESCRIPTION
   CLI.
 ```
 
-_See code: [src/commands/init.js](https://github.com/grandeurtech/cli/blob/v1.0.1/src/commands/init.js)_
+_See code: [src/commands/init.js](https://github.com/grandeurtech/cli/blob/v1.0.2/src/commands/init.js)_
 
 ## `grandeur serve`
 
@@ -97,5 +97,5 @@ DESCRIPTION
   This command will run a local development server in the workspace with auto reload functionality.
 ```
 
-_See code: [src/commands/serve.js](https://github.com/grandeurtech/cli/blob/v1.0.1/src/commands/serve.js)_
+_See code: [src/commands/serve.js](https://github.com/grandeurtech/cli/blob/v1.0.2/src/commands/serve.js)_
 <!-- commandsstop -->
