@@ -19,7 +19,7 @@
     "figlet": "^1.4.0",
     "form-data": "^3.0.0",
     "node-fetch": "^2.6.0",
-    "ws": "^7.2.3"
+    "ws": "^7.4.6"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2",
